@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lista de Compras — Zelinde</title>
+  <title>Lista de Compras — Zelinda Lima</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -272,7 +272,7 @@
 <header>
   <div class="header-top">
     <div class="header-icon">🛒</div>
-    <h1>Lista de compras — Zelinde</h1>
+    <h1>Lista de compras — Zelinda Lima</h1>
   </div>
   <p>Ajuste as quantidades e gere o PDF</p>
 </header>
@@ -307,31 +307,35 @@ const GRUPOS = [
   {
     nome: "💊 Medicamentos",
     itens: [
-      { id: 1,  nome: "Pantoprazol",       dose: "40 mg",      qtdOriginal: 0 },
-      { id: 2,  nome: "Olmesartana",        dose: "20 mg",      qtdOriginal: 0 },
-      { id: 3,  nome: "Viterim",            dose: "10/10 mg",   qtdOriginal: 0 },
-      { id: 4,  nome: "Noralo",             dose: "2,5 mg",     qtdOriginal: 0 },
-      { id: 5,  nome: "Cosopt colírio",     dose: "2% / 0,5%",  qtdOriginal: 0 },
-      { id: 6,  nome: "Dhualoz colírio",    dose: "10 ml",      qtdOriginal: 0 },
+      { id: 1,  nome: "Pantoprazol",                dose: "40 mg",      qtdOriginal: 0 },
+      { id: 2,  nome: "Olmesartana",                 dose: "20 mg",      qtdOriginal: 0 },
+      { id: 3,  nome: "Vitoryn",                     dose: "10/10 mg",   qtdOriginal: 0 },
+      { id: 4,  nome: "Novanlo",                     dose: "2,5 mg",     qtdOriginal: 0 },
+      { id: 5,  nome: "Cosopt colírio",              dose: "2% / 0,5%",  qtdOriginal: 0 },
+      { id: 6,  nome: "Thealoz colírio",             dose: "10 ml",      qtdOriginal: 0 },
+      { id: 17, nome: "Mirtazapina",                 dose: "30 mg",      qtdOriginal: 0 },
+      { id: 18, nome: "Bissulfato de Clopidogrel",   dose: "75 mg",      qtdOriginal: 0 },
+      { id: 19, nome: "Procorolan",                  dose: "5 mg",       qtdOriginal: 0 },
+      { id: 20, nome: "Clonazepam",                  dose: "0,5 mg",     qtdOriginal: 0 },
     ]
   },
   {
     nome: "🧴 Higiene e cuidados",
     itens: [
-      { id: 7,  nome: "Lenços de alhos",   dose: "",           qtdOriginal: 0 },
-      { id: 8,  nome: "Caixas de luvas",   dose: "",           qtdOriginal: 0 },
+      { id: 7,  nome: "Lenços de olhos",   dose: "",           qtdOriginal: 0 },
+      { id: 8,  nome: "Caixas de luvas",   dose: "tam. M",     qtdOriginal: 0 },
       { id: 9,  nome: "Fraldas Tena",      dose: "G adulto",   qtdOriginal: 0 },
       { id: 10, nome: "Fraldas Biofral",   dose: "G adulto",   qtdOriginal: 0 },
       { id: 11, nome: "Sabonete líquido",  dose: "",           qtdOriginal: 0 },
       { id: 12, nome: "Desodorante",       dose: "",           qtdOriginal: 0 },
-      { id: 13, nome: "Dursani",           dose: "200 ml",     qtdOriginal: 0 },
+      { id: 13, nome: "Dersani",           dose: "200 ml",     qtdOriginal: 0 },
     ]
   },
   {
     nome: "🧸 Outros",
     itens: [
       { id: 14, nome: "Bepantol Baby",     dose: "caixa",      qtdOriginal: 0 },
-      { id: 15, nome: "Pomada Practyl",    dose: "",           qtdOriginal: 0 },
+      { id: 15, nome: "Pomada Proctyl",    dose: "",           qtdOriginal: 0 },
       { id: 16, nome: "Creme dental",      dose: "",           qtdOriginal: 0 },
     ]
   }
@@ -447,7 +451,7 @@ function gerarPDF(abrirWA) {
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(...verde);
-  doc.text('Lista de compras — Zelinde', 15, 14);
+  doc.text('Lista de compras — Zelinda Lima', 15, 14);
 
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
