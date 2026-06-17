@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Lista de Compras — Zelinda Lima</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
@@ -10,83 +10,78 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #f5f7f5;
+      background: #f0f4f2;
       color: #1a1a1a;
       min-height: 100vh;
-      padding-bottom: 2rem;
+      padding-bottom: 120px;
+      font-size: 16px;
     }
 
+    /* HEADER */
     header {
-      background: #fff;
-      border-bottom: 1px solid #e0e8e4;
-      padding: 1.25rem 1rem 1rem;
+      background: #0f6e56;
+      padding: 16px;
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
     }
 
     .header-top {
       display: flex;
       align-items: center;
       gap: 10px;
-      margin-bottom: 4px;
     }
 
     .header-icon {
-      width: 36px;
-      height: 36px;
-      background: #0f6e56;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
+      font-size: 22px;
       flex-shrink: 0;
     }
 
     header h1 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #0f6e56;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
     }
 
     header p {
-      font-size: 13px;
-      color: #6b7c74;
-      margin-left: 46px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-top: 2px;
     }
 
+    /* RESUMO */
     .resumo-bar {
-      background: #e8f5f0;
-      border: 1px solid #b3ddd0;
-      border-radius: 8px;
-      padding: 8px 14px;
-      margin: 12px 1rem 0;
+      background: #fff;
+      border-bottom: 1px solid #d8ece5;
+      padding: 10px 16px;
       font-size: 13px;
       color: #0f6e56;
-      font-weight: 500;
+      font-weight: 600;
       text-align: center;
+      position: sticky;
+      top: 68px;
+      z-index: 15;
     }
 
+    /* LISTA */
     .container {
-      max-width: 520px;
-      margin: 0 auto;
-      padding: 0 0.75rem;
+      padding: 0 12px;
     }
 
     .section-label {
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       color: #6b7c74;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 18px 4px 6px;
+      letter-spacing: 0.07em;
+      padding: 16px 4px 6px;
     }
 
     .card {
       background: #fff;
-      border-radius: 12px;
-      border: 1px solid #e0e8e4;
+      border-radius: 14px;
+      border: 1px solid #dceee8;
       overflow: hidden;
     }
 
@@ -94,19 +89,22 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 11px 14px;
-      border-bottom: 1px solid #f0f4f2;
+      padding: 13px 14px;
+      border-bottom: 1px solid #f0f6f3;
+      -webkit-tap-highlight-color: transparent;
       transition: background 0.1s;
+      min-height: 56px;
     }
 
     .item-row:last-child { border-bottom: none; }
-    .item-row:active { background: #f8fbf9; }
+    .item-row:active { background: #f5faf8; }
 
+    /* Checkbox */
     .item-check {
-      width: 18px;
-      height: 18px;
-      border-radius: 5px;
-      border: 1.5px solid #b3ddd0;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid #b3ddd0;
       flex-shrink: 0;
       display: flex;
       align-items: center;
@@ -121,49 +119,49 @@
 
     .item-check.ativo::after {
       content: '';
-      width: 10px;
-      height: 6px;
-      border-left: 2px solid #fff;
-      border-bottom: 2px solid #fff;
+      width: 11px;
+      height: 7px;
+      border-left: 2.5px solid #fff;
+      border-bottom: 2.5px solid #fff;
       transform: rotate(-45deg) translateY(-1px);
       display: block;
     }
 
+    /* Info do item */
     .item-info { flex: 1; min-width: 0; }
 
     .item-nome {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 500;
       color: #1a1a1a;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      line-height: 1.3;
     }
 
-    .item-nome.zerado { color: #aab8b2; }
+    .item-nome.zerado { color: #b0c4bc; }
 
     .item-dose {
       font-size: 12px;
       color: #6b7c74;
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
+    /* Controle de quantidade */
     .qty-ctrl {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       flex-shrink: 0;
     }
 
     .qty-btn {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: 1px solid #c8d9d3;
-      background: #f5f7f5;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1.5px solid #c8d9d3;
+      background: #f0f6f3;
       color: #0f6e56;
-      font-size: 18px;
-      font-weight: 500;
+      font-size: 22px;
+      font-weight: 400;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -171,99 +169,107 @@
       line-height: 1;
       user-select: none;
       -webkit-tap-highlight-color: transparent;
-      transition: background 0.1s;
+      touch-action: manipulation;
     }
 
-    .qty-btn:active { background: #ddf0e9; }
+    .qty-btn:active { background: #c8ede0; transform: scale(0.93); }
 
     .qty-val {
-      font-size: 16px;
-      font-weight: 600;
-      min-width: 22px;
+      font-size: 18px;
+      font-weight: 700;
+      min-width: 26px;
       text-align: center;
       color: #0f6e56;
     }
 
     .qty-val.zero { color: #c8d9d3; }
 
+    /* BOTÕES — fixos no rodapé no mobile */
     .actions {
-      max-width: 520px;
-      margin: 1.25rem auto 0;
-      padding: 0 0.75rem;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #fff;
+      border-top: 1px solid #dceee8;
+      padding: 10px 12px 14px;
       display: flex;
-      flex-direction: column;
-      gap: 10px;
+      flex-wrap: wrap;
+      gap: 8px;
+      z-index: 20;
     }
 
     .btn {
+      flex: 1 1 calc(50% - 4px);
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      padding: 15px 20px;
+      gap: 8px;
+      padding: 14px 10px;
       border-radius: 12px;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
       border: none;
-      width: 100%;
       transition: transform 0.1s, opacity 0.1s;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      min-height: 50px;
     }
 
-    .btn:active { transform: scale(0.98); opacity: 0.9; }
+    .btn:active { transform: scale(0.97); opacity: 0.88; }
 
-    .btn-pdf {
-      background: #0f6e56;
-      color: #fff;
-    }
-
-    .btn-wa {
-      background: #25D366;
-      color: #fff;
-    }
+    .btn-wa  { background: #25D366; color: #fff; flex: 1 1 100%; }
 
     .btn-reset {
-      background: #fff;
+      flex: 1 1 100%;
+      background: #f0f4f2;
       color: #6b7c74;
-      border: 1px solid #e0e8e4;
+      border: 1px solid #dceee8;
       font-weight: 500;
+      font-size: 13px;
+      padding: 10px;
+      min-height: 40px;
     }
 
     .btn svg {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
       fill: none;
       stroke: currentColor;
-      stroke-width: 2;
+      stroke-width: 2.2;
       stroke-linecap: round;
       stroke-linejoin: round;
     }
 
+    /* TOAST */
     .toast {
       position: fixed;
-      bottom: 24px;
+      bottom: 110px;
       left: 50%;
-      transform: translateX(-50%) translateY(80px);
-      background: #1a1a1a;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(15,20,18,0.92);
       color: #fff;
-      padding: 12px 20px;
-      border-radius: 10px;
+      padding: 11px 20px;
+      border-radius: 24px;
       font-size: 14px;
       font-weight: 500;
-      transition: transform 0.3s ease;
+      opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
       z-index: 100;
       white-space: nowrap;
+      pointer-events: none;
     }
 
-    .toast.visivel { transform: translateX(-50%) translateY(0); }
+    .toast.visivel { opacity: 1; transform: translateX(-50%) translateY(0); }
 
     footer {
       text-align: center;
-      font-size: 12px;
+      font-size: 11px;
       color: #aab8b2;
-      margin-top: 2rem;
-      padding: 0 1rem;
+      margin-top: 1rem;
+      padding: 0 1rem 1rem;
     }
   </style>
 </head>
@@ -271,34 +277,30 @@
 
 <header>
   <div class="header-top">
-    <div class="header-icon">🛒</div>
-    <h1>Lista de compras — Zelinda Lima</h1>
+    <span class="header-icon">🛒</span>
+    <div>
+      <h1>Lista de compras</h1>
+      <p>Zelinda Lima · Ajuste as quantidades e gere o PDF</p>
+    </div>
   </div>
-  <p>Ajuste as quantidades e gere o PDF</p>
 </header>
 
+<div class="resumo-bar" id="resumo">Nenhum item selecionado</div>
+
 <div class="container">
-  <div class="resumo-bar" id="resumo">Carregando...</div>
   <div id="lista"></div>
+  <footer>
+    <p>Atualizado em <span id="data-hoje"></span></p>
+  </footer>
 </div>
 
 <div class="actions">
-  <button class="btn btn-pdf" onclick="gerarPDF(false)">
-    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-    Gerar e baixar PDF
-  </button>
-  <button class="btn btn-wa" onclick="gerarPDF(true)">
+  <button class="btn btn-wa" onclick="gerarPDF()">
     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-    Gerar PDF + abrir WhatsApp
+    Gerar PDF e enviar no WhatsApp
   </button>
-  <button class="btn btn-reset" onclick="resetar()">
-    ↺ Restaurar quantidades originais
-  </button>
+  <button class="btn btn-reset" onclick="resetar()">↺ Zerar quantidades</button>
 </div>
-
-<footer>
-  <p>Gerado em <span id="data-hoje"></span></p>
-</footer>
 
 <div class="toast" id="toast"></div>
 
@@ -307,36 +309,36 @@ const GRUPOS = [
   {
     nome: "💊 Medicamentos",
     itens: [
-      { id: 1,  nome: "Pantoprazol",                dose: "40 mg",      qtdOriginal: 0 },
-      { id: 2,  nome: "Olmesartana",                 dose: "20 mg",      qtdOriginal: 0 },
-      { id: 3,  nome: "Vitoryn",                     dose: "10/10 mg",   qtdOriginal: 0 },
-      { id: 4,  nome: "Novanlo",                     dose: "2,5 mg",     qtdOriginal: 0 },
-      { id: 5,  nome: "Cosopt colírio",              dose: "2% / 0,5%",  qtdOriginal: 0 },
-      { id: 6,  nome: "Thealoz colírio",             dose: "10 ml",      qtdOriginal: 0 },
-      { id: 17, nome: "Mirtazapina",                 dose: "30 mg",      qtdOriginal: 0 },
-      { id: 18, nome: "Bissulfato de Clopidogrel",   dose: "75 mg",      qtdOriginal: 0 },
-      { id: 19, nome: "Procorolan",                  dose: "5 mg",       qtdOriginal: 0 },
-      { id: 20, nome: "Clonazepam",                  dose: "0,5 mg",     qtdOriginal: 0 },
+      { id: 1,  nome: "Pantoprazol",               dose: "40 mg",     qtdOriginal: 0 },
+      { id: 2,  nome: "Olmesartana",                dose: "20 mg",     qtdOriginal: 0 },
+      { id: 3,  nome: "Vitoryn",                    dose: "10/10 mg",  qtdOriginal: 0 },
+      { id: 4,  nome: "Novanlo",                    dose: "2,5 mg",    qtdOriginal: 0 },
+      { id: 5,  nome: "Cosopt colírio",             dose: "2% / 0,5%", qtdOriginal: 0 },
+      { id: 6,  nome: "Thealoz colírio",            dose: "10 ml",     qtdOriginal: 0 },
+      { id: 17, nome: "Mirtazapina",                dose: "30 mg",     qtdOriginal: 0 },
+      { id: 18, nome: "Bissulfato de Clopidogrel",  dose: "75 mg",     qtdOriginal: 0 },
+      { id: 19, nome: "Procorolan",                 dose: "5 mg",      qtdOriginal: 0 },
+      { id: 20, nome: "Clonazepam",                 dose: "0,5 mg",    qtdOriginal: 0 },
     ]
   },
   {
     nome: "🧴 Higiene e cuidados",
     itens: [
-      { id: 7,  nome: "Lenços de olhos",   dose: "",           qtdOriginal: 0 },
-      { id: 8,  nome: "Caixas de luvas",   dose: "tam. M",     qtdOriginal: 0 },
-      { id: 9,  nome: "Fraldas Tena",      dose: "G adulto",   qtdOriginal: 0 },
-      { id: 10, nome: "Fraldas Biofral",   dose: "G adulto",   qtdOriginal: 0 },
-      { id: 11, nome: "Sabonete líquido",  dose: "",           qtdOriginal: 0 },
-      { id: 12, nome: "Desodorante",       dose: "",           qtdOriginal: 0 },
-      { id: 13, nome: "Dersani",           dose: "200 ml",     qtdOriginal: 0 },
+      { id: 7,  nome: "Lenços de olhos",  dose: "",          qtdOriginal: 0 },
+      { id: 8,  nome: "Caixas de luvas",  dose: "tam. M",    qtdOriginal: 0 },
+      { id: 9,  nome: "Fraldas Tena",     dose: "G adulto",  qtdOriginal: 0 },
+      { id: 10, nome: "Fraldas Biofral",  dose: "G adulto",  qtdOriginal: 0 },
+      { id: 11, nome: "Sabonete líquido", dose: "",          qtdOriginal: 0 },
+      { id: 12, nome: "Desodorante",      dose: "",          qtdOriginal: 0 },
+      { id: 13, nome: "Dersani",          dose: "200 ml",    qtdOriginal: 0 },
     ]
   },
   {
     nome: "🧸 Outros",
     itens: [
-      { id: 14, nome: "Bepantol Baby",     dose: "caixa",      qtdOriginal: 0 },
-      { id: 15, nome: "Pomada Proctyl",    dose: "",           qtdOriginal: 0 },
-      { id: 16, nome: "Creme dental",      dose: "",           qtdOriginal: 0 },
+      { id: 14, nome: "Bepantol Baby",  dose: "caixa", qtdOriginal: 0 },
+      { id: 15, nome: "Pomada Proctyl", dose: "",      qtdOriginal: 0 },
+      { id: 16, nome: "Creme dental",   dose: "",      qtdOriginal: 0 },
     ]
   }
 ];
@@ -344,18 +346,9 @@ const GRUPOS = [
 const qtds = {};
 GRUPOS.forEach(g => g.itens.forEach(i => { qtds[i.id] = i.qtdOriginal; }));
 
-function salvarLocal() {
-  // quantidades não são salvas — sempre inicia zerado
-}
-
-function carregarLocal() {
-  // sempre inicia zerado, sem carregar sessão anterior
-}
-
 function render() {
   const el = document.getElementById('lista');
   el.innerHTML = '';
-
   GRUPOS.forEach(g => {
     const label = document.createElement('div');
     label.className = 'section-label';
@@ -364,7 +357,6 @@ function render() {
 
     const card = document.createElement('div');
     card.className = 'card';
-
     g.itens.forEach(item => {
       const v = qtds[item.id];
       const row = document.createElement('div');
@@ -382,35 +374,29 @@ function render() {
         </div>`;
       card.appendChild(row);
     });
-
     el.appendChild(card);
   });
-
   atualizaResumo();
 }
 
 function mudar(id, delta) {
   qtds[id] = Math.max(0, (qtds[id] || 0) + delta);
-  salvarLocal();
   render();
 }
 
 function resetar() {
-  GRUPOS.forEach(g => g.itens.forEach(i => { qtds[i.id] = i.qtdOriginal; }));
-  salvarLocal();
+  GRUPOS.forEach(g => g.itens.forEach(i => { qtds[i.id] = 0; }));
   render();
-  mostrarToast('✓ Quantidades restauradas');
+  mostrarToast('✓ Lista zerada');
 }
 
 function atualizaResumo() {
   const prodSel = Object.values(qtds).filter(v => v > 0).length;
   const totalUn = Object.values(qtds).reduce((a, b) => a + b, 0);
   const el = document.getElementById('resumo');
-  if (prodSel === 0) {
-    el.textContent = 'Nenhum item selecionado';
-  } else {
-    el.textContent = `${prodSel} produto${prodSel > 1 ? 's' : ''} selecionado${prodSel > 1 ? 's' : ''} · ${totalUn} unidade${totalUn > 1 ? 's' : ''} no total`;
-  }
+  el.textContent = prodSel === 0
+    ? 'Nenhum item selecionado'
+    : `${prodSel} produto${prodSel > 1 ? 's' : ''} · ${totalUn} unidade${totalUn > 1 ? 's' : ''} no total`;
 }
 
 function mostrarToast(msg) {
@@ -420,22 +406,14 @@ function mostrarToast(msg) {
   setTimeout(() => t.classList.remove('visivel'), 2500);
 }
 
-function gerarPDF(abrirWA) {
-  if (!window.jspdf) {
-    mostrarToast('⚠️ Aguarde o PDF carregar...');
-    return;
-  }
-
+function gerarPDF() {
+  if (!window.jspdf) { mostrarToast('⚠️ Aguarde carregar...'); return; }
   const selecionados = [];
   GRUPOS.forEach(g => {
     const itens = g.itens.filter(i => qtds[i.id] > 0);
     if (itens.length > 0) selecionados.push({ nome: g.nome, itens });
   });
-
-  if (selecionados.length === 0) {
-    mostrarToast('⚠️ Selecione ao menos 1 item');
-    return;
-  }
+  if (selecionados.length === 0) { mostrarToast('⚠️ Selecione ao menos 1 item'); return; }
 
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
@@ -444,111 +422,77 @@ function gerarPDF(abrirWA) {
   const cinza = [120, 130, 125];
   const preto = [30, 30, 30];
 
-  // Cabeçalho
   doc.setFillColor(...verdeClaro);
-  doc.rect(0, 0, 210, 32, 'F');
-
+  doc.rect(0, 0, 210, 34, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(18);
   doc.setTextColor(...verde);
   doc.text('Lista de compras — Zelinda Lima', 15, 14);
-
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(10);
   doc.setTextColor(...cinza);
   const hoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
   doc.text(`Gerada em ${hoje}`, 15, 22);
-
-  // Totais
   const totalProd = selecionados.reduce((a, g) => a + g.itens.length, 0);
   const totalUn = selecionados.reduce((a, g) => a + g.itens.reduce((b, i) => b + qtds[i.id], 0), 0);
   doc.setFont('helvetica', 'bold');
   doc.setTextColor(...verde);
-  doc.text(`${totalProd} produtos · ${totalUn} unidades`, 15, 29);
+  doc.text(`${totalProd} produto${totalProd > 1 ? 's' : ''} · ${totalUn} unidade${totalUn > 1 ? 's' : ''}`, 15, 30);
 
-  let y = 42;
-
+  let y = 44;
   selecionados.forEach(grupo => {
-    // Título do grupo
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
     doc.setTextColor(...verde);
-    // Remove emoji do nome do grupo
-    const nomeGrupo = grupo.nome.replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u2600-\u27FF]/g, '').trim();
+    const nomeGrupo = grupo.nome.replace(/\p{Emoji}/gu, '').trim();
     doc.text(nomeGrupo, 15, y);
     y += 2;
-
     doc.setDrawColor(...verde);
     doc.setLineWidth(0.5);
     doc.line(15, y, 195, y);
-    y += 6;
+    y += 7;
 
     grupo.itens.forEach(item => {
-      if (y > 270) {
-        doc.addPage();
-        y = 20;
-      }
-
-      // Checkbox
-      doc.setDrawColor(...verde);
-      doc.setLineWidth(0.4);
-      doc.rect(15, y - 4, 4, 4);
+      if (y > 270) { doc.addPage(); y = 20; }
       doc.setFillColor(...verde);
       doc.rect(15.5, y - 3.5, 3, 3, 'F');
-
-      // Quantidade badge
       doc.setFillColor(...verdeClaro);
       doc.roundedRect(22, y - 4.5, 10, 5, 1, 1, 'F');
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(9);
       doc.setTextColor(...verde);
       doc.text(`${qtds[item.id]}x`, 27, y - 1, { align: 'center' });
-
-      // Nome do item
       doc.setFont('helvetica', 'normal');
       doc.setFontSize(11);
       doc.setTextColor(...preto);
       doc.text(item.nome, 35, y - 1);
-
-      // Dose à direita
       if (item.dose) {
         doc.setFontSize(9);
         doc.setTextColor(...cinza);
         doc.text(item.dose, 195, y - 1, { align: 'right' });
       }
-
-      // Linha divisória leve
-      doc.setDrawColor(225, 235, 230);
+      doc.setDrawColor(220, 235, 228);
       doc.setLineWidth(0.3);
-      doc.line(15, y + 1.5, 195, y + 1.5);
-
+      doc.line(15, y + 2, 195, y + 2);
       y += 9;
     });
-
-    y += 6;
+    y += 5;
   });
 
-  // Rodapé
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(8);
   doc.setTextColor(...cinza);
-  doc.text('Lista gerada automaticamente · github.com/flima622003622003', 15, 285);
-
-  doc.save('lista-compras-zelinde.pdf');
-  mostrarToast('✓ PDF baixado com sucesso!');
-
-  if (abrirWA) {
-    setTimeout(() => {
-      window.open('https://wa.me/?text=' + encodeURIComponent('📋 Olá! Segue a lista de compras em anexo.'), '_blank');
-    }, 1000);
-  }
+  doc.text('Lista gerada automaticamente · github.com/flima622003622003', 15, 287);
+  doc.save('lista-compras-zelinda.pdf');
+  mostrarToast('✓ PDF baixado!');
+  setTimeout(() => {
+    window.open('https://wa.me/?text=' + encodeURIComponent('📋 Lista de compras da Zelinda Lima em anexo.'), '_blank');
+  }, 900);
 }
 
-// Data no rodapé
 document.getElementById('data-hoje').textContent =
   new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
 
-carregarLocal();
 render();
 </script>
 </body>
