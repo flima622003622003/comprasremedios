@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Lista de Compras — Zelinda Lima</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -280,7 +279,7 @@
     <span class="header-icon">🛒</span>
     <div>
       <h1>Lista de compras</h1>
-      <p>Zelinda Lima · Ajuste as quantidades e gere o PDF</p>
+      <p>Zelinda Lima · Selecione e envie pelo WhatsApp</p>
     </div>
   </div>
 </header>
@@ -295,9 +294,9 @@
 </div>
 
 <div class="actions">
-  <button class="btn btn-wa" onclick="gerarPDF()">
+  <button class="btn btn-wa" onclick="enviarWhatsApp()">
     <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-    Gerar PDF e enviar no WhatsApp
+    Enviar lista pelo WhatsApp
   </button>
   <button class="btn btn-reset" onclick="resetar()">↺ Zerar quantidades</button>
 </div>
@@ -406,8 +405,7 @@ function mostrarToast(msg) {
   setTimeout(() => t.classList.remove('visivel'), 2500);
 }
 
-function gerarPDF() {
-  if (!window.jspdf) { mostrarToast('⚠️ Aguarde carregar...'); return; }
+function enviarWhatsApp() {
   const selecionados = [];
   GRUPOS.forEach(g => {
     const itens = g.itens.filter(i => qtds[i.id] > 0);
@@ -415,79 +413,31 @@ function gerarPDF() {
   });
   if (selecionados.length === 0) { mostrarToast('⚠️ Selecione ao menos 1 item'); return; }
 
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const verde = [15, 110, 86];
-  const verdeClaro = [232, 245, 240];
-  const cinza = [120, 130, 125];
-  const preto = [30, 30, 30];
-
-  doc.setFillColor(...verdeClaro);
-  doc.rect(0, 0, 210, 34, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(18);
-  doc.setTextColor(...verde);
-  doc.text('Lista de compras — Zelinda Lima', 15, 14);
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(...cinza);
   const hoje = new Date().toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' });
-  doc.text(`Gerada em ${hoje}`, 15, 22);
   const totalProd = selecionados.reduce((a, g) => a + g.itens.length, 0);
-  const totalUn = selecionados.reduce((a, g) => a + g.itens.reduce((b, i) => b + qtds[i.id], 0), 0);
-  doc.setFont('helvetica', 'bold');
-  doc.setTextColor(...verde);
-  doc.text(`${totalProd} produto${totalProd > 1 ? 's' : ''} · ${totalUn} unidade${totalUn > 1 ? 's' : ''}`, 15, 30);
+  const totalUn   = selecionados.reduce((a, g) => a + g.itens.reduce((b, i) => b + qtds[i.id], 0), 0);
 
-  let y = 44;
+  let msg = `🛒 *Lista de compras — Zelinda Lima*\n`;
+  msg    += `📅 ${hoje}\n`;
+  msg    += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+
   selecionados.forEach(grupo => {
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(11);
-    doc.setTextColor(...verde);
     const nomeGrupo = grupo.nome.replace(/\p{Emoji}/gu, '').trim();
-    doc.text(nomeGrupo, 15, y);
-    y += 2;
-    doc.setDrawColor(...verde);
-    doc.setLineWidth(0.5);
-    doc.line(15, y, 195, y);
-    y += 7;
-
+    msg += `*${nomeGrupo}*\n`;
     grupo.itens.forEach(item => {
-      if (y > 270) { doc.addPage(); y = 20; }
-      doc.setFillColor(...verde);
-      doc.rect(15.5, y - 3.5, 3, 3, 'F');
-      doc.setFillColor(...verdeClaro);
-      doc.roundedRect(22, y - 4.5, 10, 5, 1, 1, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(9);
-      doc.setTextColor(...verde);
-      doc.text(`${qtds[item.id]}x`, 27, y - 1, { align: 'center' });
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(11);
-      doc.setTextColor(...preto);
-      doc.text(item.nome, 35, y - 1);
-      if (item.dose) {
-        doc.setFontSize(9);
-        doc.setTextColor(...cinza);
-        doc.text(item.dose, 195, y - 1, { align: 'right' });
-      }
-      doc.setDrawColor(220, 235, 228);
-      doc.setLineWidth(0.3);
-      doc.line(15, y + 2, 195, y + 2);
-      y += 9;
+      const dose = item.dose ? ` _(${item.dose})_` : '';
+      msg += `▪️ ${qtds[item.id]}x ${item.nome}${dose}\n`;
     });
-    y += 5;
+    msg += '\n';
   });
 
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(...cinza);
-  doc.text('Lista gerada automaticamente · github.com/flima622003622003', 15, 287);
-  doc.save('lista-compras-zelinda.pdf');
-  mostrarToast('✓ PDF baixado!');
+  msg += `━━━━━━━━━━━━━━━━━━━━\n`;
+  msg += `✅ ${totalProd} produto${totalProd > 1 ? 's' : ''} · ${totalUn} unidade${totalUn > 1 ? 's' : ''}`;
+
+  mostrarToast('✓ Abrindo WhatsApp...');
   setTimeout(() => {
-    window.open('https://wa.me/?text=' + encodeURIComponent('📋 Lista de compras da Zelinda Lima em anexo.'), '_blank');
-  }, 900);
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }, 400);
 }
 
 document.getElementById('data-hoje').textContent =
